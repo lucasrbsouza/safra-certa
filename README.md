@@ -1,5 +1,22 @@
 # 🌾 SafraCerta
 
+<div align="center">
+
+**Simulador de Viabilidade Financeira para Produtores Rurais**
+
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![Vue](https://img.shields.io/badge/Vue.js-3-42b883)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED)
+![License](https://img.shields.io/badge/License-Apache%202.0-orange)
+
+Projeto desenvolvido para a disciplina de **Estágio Curricular Supervisionado — Fábrica de Software I**
+
+</div>
+
+---
+
 ## Simulador de Viabilidade Financeira para Produtores Rurais
 
 Projeto desenvolvido para a disciplina de **Estágio Curricular Supervisionado — Fábrica de Software I** (*Março de 2026*).
@@ -208,3 +225,4 @@ Frontend Vue.js, integrações e UX/UI
 ## 📄 Licença
 
 Este projeto está licenciado sob a **Apache License 2.0**.
+
