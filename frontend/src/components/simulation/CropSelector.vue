@@ -1,13 +1,14 @@
 <template>
-  <div class="crop-selector">
+  <div class="crop-selector" role="group" aria-label="Selecionar cultura">
     <button
       v-for="crop in crops"
       :key="crop.value"
-      :class="['crop-selector__btn', { 'crop-selector__btn--active': modelValue === crop.value }]"
+      :class="['crop-btn', `crop-btn--${crop.value}`, { 'crop-btn--active': modelValue === crop.value }]"
       type="button"
       @click="$emit('update:modelValue', crop.value)"
     >
-      {{ crop.label }}
+      <span class="crop-btn__icon">{{ crop.icon }}</span>
+      <span class="crop-btn__label">{{ crop.label }}</span>
     </button>
   </div>
 </template>
@@ -17,24 +18,47 @@ defineProps({ modelValue: { type: String, required: true } })
 defineEmits(['update:modelValue'])
 
 const crops = [
-  { value: 'soja', label: 'Soja' },
-  { value: 'milho', label: 'Milho' },
-  { value: 'feijao', label: 'Feijão' },
+  { value: 'soja',   label: 'Soja',   icon: '🌱' },
+  { value: 'milho',  label: 'Milho',  icon: '🌽' },
+  { value: 'feijao', label: 'Feijão', icon: '🫘' },
 ]
 </script>
 
 <style scoped>
-.crop-selector { display: flex; gap: 0; border-radius: 8px; overflow: hidden; border: 1.5px solid #2e7d32; width: fit-content; }
-.crop-selector__btn {
-  padding: 0.5rem 1.2rem;
-  border: none;
+.crop-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.crop-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
   background: #fff;
-  color: #2e7d32;
+  color: var(--gray-600);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  font-size: 0.9rem;
+  transition: all 0.15s;
 }
-.crop-selector__btn--active { background: #2e7d32; color: #fff; }
-.crop-selector__btn:not(.crop-selector__btn--active):hover { background: #e8f5e9; }
+
+.crop-btn:hover:not(.crop-btn--active) {
+  border-color: var(--green-300);
+  background: var(--green-50);
+  color: var(--green-700);
+}
+
+.crop-btn--active {
+  border-color: var(--green-500);
+  background: var(--green-600);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(45,122,62,0.3);
+}
+
+.crop-btn__icon { font-size: 1rem; line-height: 1; }
 </style>
