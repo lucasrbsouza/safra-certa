@@ -100,7 +100,7 @@ O projeto segue uma arquitetura **Cliente-Servidor clássica**, com separação 
 ### Infraestrutura
 
 * Docker
-* Docker Compose
+* Docker Compose (plugin nativo — `docker compose`)
 * Nginx
 
 ---
@@ -109,7 +109,7 @@ O projeto segue uma arquitetura **Cliente-Servidor clássica**, com separação 
 
 A forma mais simples de rodar o **SafraCerta** é via Docker.
 
-O projeto já inclui um `docker-compose.yml` responsável por subir:
+O projeto já inclui um `docker compose.yml` responsável por subir:
 
 * Banco de dados
 * API Backend
@@ -117,8 +117,7 @@ O projeto já inclui um `docker-compose.yml` responsável por subir:
 
 ### Pré-requisitos
 
-* Docker instalado
-* Docker Compose instalado
+* Docker instalado (versão 20.10+ com o plugin Compose embutido)
 
 ### 1. Clone o repositório
 
@@ -144,7 +143,7 @@ Por padrão, o sistema roda em **modo mock (simulado)**.
 ### 3. Suba os containers
 
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ### 4. Acesse as aplicações
@@ -164,7 +163,7 @@ O backend possui uma suíte automatizada de testes unitários e de integração.
 Execute com:
 
 ```bash
-docker-compose exec backend pytest
+docker compose exec backend pytest
 ```
 
 ---
@@ -198,7 +197,7 @@ safra-certa/
 │   └── index.html
 │
 ├── database/
-└── docker-compose.yml
+└── docker compose.yml
 ```
 
 ---
