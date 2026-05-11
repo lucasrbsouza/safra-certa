@@ -10,7 +10,8 @@
           :class="['crop-pill', { 'crop-pill--active': form.crop_type === opt.value }]"
           @click="form.crop_type = opt.value"
         >
-          {{ opt.icon }} {{ opt.label }}
+          <CropIcon :type="opt.value" class="crop-pill__icon" />
+          {{ opt.label }}
         </button>
       </div>
     </div>
@@ -61,6 +62,7 @@ import { useNotification } from '@/composables/useNotification.js'
 import { useCurrency } from '@/composables/useCurrency.js'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
+import CropIcon from '@/components/ui/CropIcon.vue'
 
 const emit = defineEmits(['saved'])
 
@@ -91,9 +93,9 @@ const totalPreview = computed(() =>
 )
 
 const cropOptions = [
-  { value: 'soja',   label: 'Soja',   icon: '🌱' },
-  { value: 'milho',  label: 'Milho',  icon: '🌽' },
-  { value: 'feijao', label: 'Feijão', icon: '🫘' },
+  { value: 'soja',   label: 'Soja'   },
+  { value: 'milho',  label: 'Milho'  },
+  { value: 'feijao', label: 'Feijão' },
 ]
 
 async function handleSubmit() {
@@ -138,6 +140,8 @@ async function handleSubmit() {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+.crop-pill__icon { font-size: 1rem; }
 
 .crop-pill {
   display: flex;
