@@ -48,7 +48,8 @@
                 <span>Selecionado: <strong>{{ cropLabel(selectedEntry.crop_type) }} – {{ formatBRL(selectedEntry.total_cost) }}/ha</strong></span>
               </div>
               <RouterLink to="/" class="cost-page__goto-sim">
-                Ir para simulação →
+                Ir para simulação
+                <ArrowRightIcon class="cost-page__arrow-icon" />
               </RouterLink>
             </div>
           </div>
@@ -65,6 +66,7 @@ import { useCostStore } from '@/stores/costStore.js'
 import { useCurrency } from '@/composables/useCurrency.js'
 import CostForm from '@/components/cost/CostForm.vue'
 import CostTable from '@/components/cost/CostTable.vue'
+import { ArrowRightIcon } from '@heroicons/vue/24/outline'
 
 const store = useCostStore()
 const { formatBRL } = useCurrency()
@@ -218,6 +220,9 @@ function handleSaved(entry) {
 .cost-page__selected-info svg { width: 16px; height: 16px; color: var(--green-500); flex-shrink: 0; }
 
 .cost-page__goto-sim {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--green-600);
@@ -225,4 +230,5 @@ function handleSaved(entry) {
   white-space: nowrap;
 }
 .cost-page__goto-sim:hover { color: var(--green-800); }
+.cost-page__arrow-icon { width: 0.85em; height: 0.85em; flex-shrink: 0; }
 </style>
