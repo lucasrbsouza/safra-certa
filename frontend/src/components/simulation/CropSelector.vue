@@ -7,20 +7,22 @@
       type="button"
       @click="$emit('update:modelValue', crop.value)"
     >
-      <span class="crop-btn__icon">{{ crop.icon }}</span>
+      <CropIcon :type="crop.value" class="crop-btn__icon" />
       <span class="crop-btn__label">{{ crop.label }}</span>
     </button>
   </div>
 </template>
 
 <script setup>
+import CropIcon from '@/components/ui/CropIcon.vue'
+
 defineProps({ modelValue: { type: String, required: true } })
 defineEmits(['update:modelValue'])
 
 const crops = [
-  { value: 'soja',   label: 'Soja',   icon: '🌱' },
-  { value: 'milho',  label: 'Milho',  icon: '🌽' },
-  { value: 'feijao', label: 'Feijão', icon: '🫘' },
+  { value: 'soja',   label: 'Soja'   },
+  { value: 'milho',  label: 'Milho'  },
+  { value: 'feijao', label: 'Feijão' },
 ]
 </script>
 
@@ -60,5 +62,5 @@ const crops = [
   box-shadow: 0 2px 6px rgba(45,122,62,0.3);
 }
 
-.crop-btn__icon { font-size: 1rem; line-height: 1; }
+.crop-btn__icon { font-size: 1.1rem; }
 </style>
