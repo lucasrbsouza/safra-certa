@@ -3,7 +3,9 @@
     <div class="gauge__header">
       <span class="gauge__title">Ponto de Equilíbrio</span>
       <span :class="['gauge__badge', isViable ? 'gauge__badge--viable' : 'gauge__badge--inviable']">
-        {{ isViable ? '✓ Viável' : '✗ Inviável' }}
+        <CheckCircleIcon v-if="isViable" class="gauge__badge-icon" />
+        <XCircleIcon v-else class="gauge__badge-icon" />
+        {{ isViable ? 'Viável' : 'Inviável' }}
       </span>
     </div>
 
@@ -39,6 +41,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useCurrency } from '@/composables/useCurrency.js'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps({
   breakevenSacks:        { type: Number, default: 0 },
@@ -95,12 +98,16 @@ const needleStyle = computed(() => ({
 }
 
 .gauge__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
   letter-spacing: 0.02em;
 }
+.gauge__badge-icon { width: 14px; height: 14px; flex-shrink: 0; }
 .gauge__badge--viable   { background: var(--green-100); color: var(--green-700); }
 .gauge__badge--inviable { background: var(--red-100);   color: var(--red-600); }
 
