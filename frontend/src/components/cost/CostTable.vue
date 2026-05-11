@@ -2,7 +2,9 @@
   <div class="cost-table-wrap">
 
     <div v-if="costs.length === 0" class="cost-table__empty">
-      <div class="cost-table__empty-icon">📋</div>
+      <div class="cost-table__empty-icon">
+        <ClipboardDocumentListIcon />
+      </div>
       <p class="cost-table__empty-title">Nenhum custo cadastrado</p>
       <p class="cost-table__empty-sub">Preencha o formulário ao lado para adicionar um registro de custos.</p>
     </div>
@@ -31,7 +33,8 @@
           >
             <td>
               <span :class="['crop-tag', `crop-tag--${entry.crop_type}`]">
-                {{ cropIcon(entry.crop_type) }} {{ cropLabel(entry.crop_type) }}
+                <CropIcon :type="entry.crop_type" class="crop-tag__icon" />
+                {{ cropLabel(entry.crop_type) }}
               </span>
             </td>
             <td>{{ formatBRL(entry.seeds) }}</td>
@@ -64,6 +67,8 @@ import { computed } from 'vue'
 import { useCostStore } from '@/stores/costStore.js'
 import { useCurrency } from '@/composables/useCurrency.js'
 import { useNotification } from '@/composables/useNotification.js'
+import { ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
+import CropIcon from '@/components/ui/CropIcon.vue'
 
 const store = useCostStore()
 const { formatBRL } = useCurrency()
@@ -73,9 +78,7 @@ const costs     = computed(() => store.costs)
 const selectedId = computed(() => store.selectedId)
 
 const CROP_LABELS = { soja: 'Soja', milho: 'Milho', feijao: 'Feijão' }
-const CROP_ICONS  = { soja: '🌱', milho: '🌽', feijao: '🫘' }
 const cropLabel = (t) => CROP_LABELS[t] ?? t
-const cropIcon  = (t) => CROP_ICONS[t]  ?? '🌾'
 
 const selectedLabel = computed(() => {
   const e = costs.value.find(c => c.id === selectedId.value)
@@ -107,7 +110,8 @@ async function handleDelete(id) {
   text-align: center;
   gap: 0.5rem;
 }
-.cost-table__empty-icon { font-size: 2rem; }
+.cost-table__empty-icon { font-size: 2.5rem; color: var(--gray-400); }
+.cost-table__empty-icon svg { width: 1em; height: 1em; }
 .cost-table__empty-title {
   font-size: 0.95rem;
   font-weight: 600;
@@ -160,6 +164,8 @@ async function handleDelete(id) {
   font-weight: 700;
   color: var(--gray-900) !important;
 }
+
+.crop-tag__icon { font-size: 0.9rem; }
 
 .crop-tag {
   display: inline-flex;
