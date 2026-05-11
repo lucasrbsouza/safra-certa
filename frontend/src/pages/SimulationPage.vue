@@ -62,7 +62,7 @@
             :class="['sim-page__result-block', result.is_viable ? 'sim-page__result-block--viable' : 'sim-page__result-block--inviable']"
           >
             <div class="sim-page__crop-header">
-              <span class="sim-page__crop-icon">{{ cropIcon(result.crop_type) }}</span>
+              <CropIcon :type="result.crop_type" class="sim-page__crop-icon" />
               <h3 class="sim-page__crop-name">{{ cropLabel(result.crop_type) }}</h3>
               <span :class="['sim-page__viability-badge', result.is_viable ? 'sim-page__viability-badge--viable' : 'sim-page__viability-badge--inviable']">
                 {{ result.is_viable ? 'Viável' : 'Inviável' }}
@@ -97,11 +97,14 @@
 
       <!-- Empty state -->
       <div v-if="results.length === 0 && !loading" class="sim-page__empty">
-        <div class="sim-page__empty-icon">📊</div>
+        <div class="sim-page__empty-icon">
+          <ChartBarSquareIcon />
+        </div>
         <h3 class="sim-page__empty-title">Compare as três culturas</h3>
         <p class="sim-page__empty-text">Informe a produtividade esperada e clique em <strong>Comparar tudo</strong> para ver qual cultura oferece a melhor margem com os preços de hoje.</p>
         <RouterLink v-if="costStore.costs.length === 0" to="/custos" class="sim-page__empty-link">
-          Cadastrar custos operacionais →
+          Cadastrar custos operacionais
+          <ArrowRightIcon class="sim-page__arrow-icon" />
         </RouterLink>
       </div>
 
@@ -117,6 +120,8 @@ import { useCurrency } from '@/composables/useCurrency.js'
 import BreakevenGauge from '@/components/simulation/BreakevenGauge.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
+import { ChartBarSquareIcon, ArrowRightIcon } from '@heroicons/vue/24/outline'
+import CropIcon from '@/components/ui/CropIcon.vue'
 
 const costStore = useCostStore()
 const { formatBRL } = useCurrency()
@@ -128,9 +133,7 @@ const loading         = ref(false)
 const error           = ref(null)
 
 const CROP_LABELS = { soja: 'Soja', milho: 'Milho', feijao: 'Feijão' }
-const CROP_ICONS  = { soja: '🌱', milho: '🌽', feijao: '🫘' }
 const cropLabel = (t) => CROP_LABELS[t] ?? t
-const cropIcon  = (t) => CROP_ICONS[t]  ?? '🌾'
 
 onMounted(() => costStore.fetchAll())
 
@@ -394,16 +397,20 @@ async function simulateAll() {
   align-items: center;
   gap: 0.6rem;
 }
-.sim-page__empty-icon { font-size: 2.5rem; }
+.sim-page__empty-icon { font-size: 2.5rem; color: var(--gray-400); }
+.sim-page__empty-icon svg { width: 1em; height: 1em; }
 .sim-page__empty-title { font-size: 1.1rem; font-weight: 700; color: var(--gray-700); }
 .sim-page__empty-text { font-size: 0.875rem; color: var(--gray-500); max-width: 380px; }
 .sim-page__empty-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   margin-top: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--green-600);
 }
+.sim-page__arrow-icon { width: 0.9em; height: 0.9em; flex-shrink: 0; }
 
 .results-fade-enter-active { animation: slide-up 0.35s ease; }
 @keyframes slide-up {
