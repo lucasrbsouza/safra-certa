@@ -9,7 +9,7 @@
         <span class="ticker__pulse"></span> Carregando...
       </div>
       <div v-for="item in priceList" :key="item.crop_type" class="ticker__item">
-        <span class="ticker__crop-icon">{{ cropIcon(item.crop_type) }}</span>
+        <CropIcon :type="item.crop_type" class="ticker__crop-icon" />
         <span class="ticker__crop">{{ cropLabel(item.crop_type) }}</span>
         <span class="ticker__price">{{ formatBRL(item.price_per_sack) }}</span>
         <span class="ticker__unit">/ sc</span>
@@ -22,6 +22,7 @@
 import { computed, onMounted, onUnmounted } from 'vue'
 import { useCommodityStore } from '@/stores/commodityStore.js'
 import { useCurrency } from '@/composables/useCurrency.js'
+import CropIcon from '@/components/ui/CropIcon.vue'
 
 const store = useCommodityStore()
 const { formatBRL } = useCurrency()
@@ -30,9 +31,7 @@ const priceList = computed(() => store.priceList)
 const loading = computed(() => store.loading)
 
 const CROP_LABELS = { soja: 'Soja', milho: 'Milho', feijao: 'Feijão' }
-const CROP_ICONS  = { soja: '🌱', milho: '🌽', feijao: '🫘' }
 const cropLabel = (type) => CROP_LABELS[type] ?? type
-const cropIcon  = (type) => CROP_ICONS[type]  ?? '🌾'
 
 let interval = null
 onMounted(() => { store.fetchAll(); interval = setInterval(() => store.fetchAll(), 5 * 60 * 1000) })
@@ -94,7 +93,7 @@ onUnmounted(() => clearInterval(interval))
   white-space: nowrap;
 }
 
-.ticker__crop-icon { font-size: 0.85rem; }
+.ticker__crop-icon { font-size: 0.9rem; color: var(--green-400); }
 
 .ticker__crop {
   font-size: 0.8rem;
