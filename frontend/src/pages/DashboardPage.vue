@@ -50,7 +50,10 @@
               <svg class="dash__select-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
             </div>
             <p v-if="costStore.costs.length === 0" class="dash__hint">
-              <RouterLink to="/custos">Cadastre seus custos primeiro →</RouterLink>
+              <RouterLink to="/custos" class="dash__hint-link">
+                Cadastre seus custos primeiro
+                <ArrowRightIcon class="dash__arrow-icon" />
+              </RouterLink>
             </p>
           </div>
 
@@ -105,7 +108,8 @@
             <p class="dash__next-label">Próximo passo</p>
             <RouterLink to="/simulacao" class="dash__next-link">
               <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-              Comparar todas as culturas →
+              Comparar todas as culturas
+              <ArrowRightIcon class="dash__arrow-icon" />
             </RouterLink>
           </div>
         </div>
@@ -113,11 +117,14 @@
 
       <!-- Empty state -->
       <div v-if="!store.result && !store.loading" class="dash__empty">
-        <div class="dash__empty-icon">🌾</div>
+        <div class="dash__empty-icon">
+          <CropIcon type="fallback" />
+        </div>
         <h3 class="dash__empty-title">Pronto para simular?</h3>
         <p class="dash__empty-text">Selecione a cultura, informe a produtividade esperada e clique em <strong>Simular</strong> para calcular o ponto de equilíbrio.</p>
         <RouterLink v-if="costStore.costs.length === 0" to="/custos" class="dash__empty-link">
-          Cadastrar custos operacionais →
+          Cadastrar custos operacionais
+          <ArrowRightIcon class="dash__arrow-icon" />
         </RouterLink>
       </div>
 
@@ -137,6 +144,8 @@ import BreakevenGauge from '@/components/simulation/BreakevenGauge.vue'
 import ResultCard from '@/components/simulation/ResultCard.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
+import { ArrowRightIcon } from '@heroicons/vue/24/outline'
+import CropIcon from '@/components/ui/CropIcon.vue'
 
 const store = useSimulationStore()
 const costStore = useCostStore()
@@ -286,7 +295,13 @@ async function handleSimulate() {
 }
 
 .dash__hint { margin: 0; font-size: 0.75rem; }
-.dash__hint a { color: var(--green-600); font-weight: 600; }
+.dash__hint-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--green-600);
+  font-weight: 600;
+}
 
 .dash__error {
   font-size: 0.82rem;
@@ -339,6 +354,7 @@ async function handleSimulate() {
   margin-left: auto;
 }
 .dash__next-link svg { width: 16px; height: 16px; }
+.dash__arrow-icon { width: 0.85em; height: 0.85em; flex-shrink: 0; }
 .dash__next-link:hover { color: var(--green-700); }
 
 .dash__empty {
@@ -352,11 +368,14 @@ async function handleSimulate() {
   align-items: center;
   gap: 0.6rem;
 }
-.dash__empty-icon { font-size: 2.5rem; }
+.dash__empty-icon { font-size: 2.5rem; color: var(--green-500); }
+.dash__empty-icon svg { width: 1em; height: 1em; }
 .dash__empty-title { font-size: 1.1rem; font-weight: 700; color: var(--gray-700); }
 .dash__empty-text { font-size: 0.875rem; color: var(--gray-500); max-width: 360px; }
 .dash__empty-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   margin-top: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
